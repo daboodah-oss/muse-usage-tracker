@@ -1,0 +1,1 @@
+{"background_color":"#0f1420","description":"Track Muse subscription usage against the weekly free limit.","display":"standalone","icons":[{"sizes":"192x192","src":"icons/icon-192.png","type":"image/png"},{"sizes":"512x512","src":"icons/icon-512.png","type":"image/png"}],"name":"Muse Usage Tracker","short_name":"Usage","start_url":".","theme_color":"#0f1420"}
