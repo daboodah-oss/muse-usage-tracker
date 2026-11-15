@@ -17,3 +17,16 @@ caching, so the worker was retired — `sw.js` is a stub that deletes the
 old caches and unregisters itself on clients that still have it. The
 stub must stay served for at least 30 days after this lands; after that,
 `sw.js` can be deleted.
+
+## Publishing
+
+An hourly cron on Budzilla's VM rebuilds the dashboard and publishes it
+as `index.html`. Publishing is a real git push
+(`tools/push_dashboard_git.py`; the live copy sits in the tracker
+workspace): a transport clone at `~/workspace/muse-usage-tracker-clone`
+re-syncs to `main`, takes the rebuilt file, commits, and pushes. Auth
+is a repo-scoped deploy key (`~/.ssh/muse_tracker_deploy`; repo
+Settings -> Deploy keys, "Budzilla VM muse tracker pusher") reaching
+ssh.github.com:443 through the VM egress proxy's HTTP CONNECT tunnel.
+This replaced `gh.py push-file` on 2026-11-15 — the Contents API
+re-uploaded the whole ~763 KB page every hour and caps files at 1 MB.
