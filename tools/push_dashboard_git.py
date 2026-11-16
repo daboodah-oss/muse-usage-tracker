@@ -54,7 +54,20 @@ def main():
             print(f"pusher: fetch failed: {r.stderr.strip()[:200]}", file=sys.stderr)
             return 1
         git("reset", "--hard", "origin/main")
+        baseline = os.path.getsize(DST) if os.path.exists(DST) else 0
         shutil.copyfile(SRC, DST)
+        # Sanity guard: never publish a broken build over the live
+        # page. The dashboard is a generated file (not append-only),
+        # so the check is size and completeness, not deletions.
+        with open(DST, "rb") as f:
+            content = f.read()
+        if (len(content) < 100_000
+                or (baseline and len(content) < baseline // 2)
+                or not content.rstrip().endswith(b"</html>")):
+            print(f"pusher: guard: rebuilt page looks broken "
+                  f"({len(content)} bytes vs baseline {baseline}); "
+                  f"pushing nothing", file=sys.stderr)
+            return 1
         git("add", "index.html")
         if not git("status", "--porcelain").stdout.strip():
             print("pusher: unchanged, nothing to push")
