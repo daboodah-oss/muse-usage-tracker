@@ -1,6 +1,15 @@
 # muse-usage-tracker
 Muse subscription usage tracker dashboard (auto-updated hourly)
 
+> **Status: frozen 2026-11-22.** This page is a snapshot (final build:
+> 15,488 samples through Nov 22, 2026, 4:37 PM ET). Its per-cycle history
+> moved to the unified dashboard (daboodah-oss/assistant-usage), which now
+> carries a cycle-history table for every lane; Muse sampling continues
+> there on the 15-minute lane. The full 5-minute collector log is archived
+> at `data/usage_log.csv` in this repo. The collector and hourly refresh
+> jobs are disabled, not deleted, so the page can be revived by
+> re-enabling them.
+
 ## Installed app
 
 The page is installable as a web app. In `manifest.webmanifest`,
